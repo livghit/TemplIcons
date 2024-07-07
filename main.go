@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
+// this generates Templ files from the SVG files found under icons/outline folder
 func main() {
 	err := filepath.Walk("icons/outline", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -23,7 +24,7 @@ func main() {
 			defer svgFile.Close()
 
 			// Read the SVG file content
-			svgContent, err := ioutil.ReadAll(svgFile)
+			svgContent, err := io.ReadAll(io.Reader(svgFile))
 			if err != nil {
 				return err
 			}
